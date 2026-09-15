@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://allascode.dev/schemas/data-learning/training-run.schema.json",
+  "title": "AllasCode Training Run",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "training_run_id",
+    "backend",
+    "backend_version",
+    "base_model",
+    "dataset_hash",
+    "reward_policy_version",
+    "training_method",
+    "status"
+  ],
+  "properties": {
+    "training_run_id": {"type": "string", "minLength": 1},
+    "backend": {"type": "string", "minLength": 1},
+    "backend_version": {"type": "string", "minLength": 1},
+    "base_model": {"type": "string", "minLength": 1},
+    "dataset_hash": {"type": "string", "minLength": 1},
+    "dataset_policy_version": {"type": "string"},
+    "reward_policy_version": {"type": "string", "minLength": 1},
+    "training_method": {"type": "string", "minLength": 1},
+    "random_seed": {"type": ["integer", "null"]},
+    "training_config_hash": {"type": ["string", "null"]},
+    "started_at": {"type": ["string", "null"], "format": "date-time"},
+    "finished_at": {"type": ["string", "null"], "format": "date-time"},
+    "status": {
+      "enum": ["created", "collecting", "training", "trained", "failed", "cancelled"]
+    },
+    "candidate_artifact": {
+      "oneOf": [
+        {"type": "null"},
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["uri", "hash"],
+          "properties": {
+            "uri": {"type": "string", "minLength": 1},
+            "hash": {"type": "string", "minLength": 1},
+            "format": {"type": "string"}
+          }
+        }
+      ]
+    }
+  }
+}
