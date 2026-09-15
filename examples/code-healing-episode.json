@@ -1,0 +1,97 @@
+{
+  "episode_id": "healing-episode-0001",
+  "version": 1,
+  "execution_id": "exec-2026-09-15-0001",
+  "agent": "CodeManager",
+  "intent": "RepairCode",
+  "canonical_label": "CodeManager.RepairCode",
+  "started_at": "2026-09-15T20:00:00Z",
+  "finished_at": "2026-09-15T20:00:03Z",
+  "initial_state_hash": "sha256:initial-state-example",
+  "source_evidence": [
+    {
+      "type": "event",
+      "uri": "event://runtime/exec-2026-09-15-0001/1",
+      "hash": "sha256:event-example",
+      "producer": "A3ERuntime",
+      "captured_at": "2026-09-15T20:00:00Z"
+    },
+    {
+      "type": "trace",
+      "uri": "trace://exec-2026-09-15-0001",
+      "hash": "sha256:trace-example",
+      "producer": "ObservabilityPlane",
+      "captured_at": "2026-09-15T20:00:00Z"
+    },
+    {
+      "type": "source",
+      "uri": "git://repository/src/storage.zig@abc123",
+      "hash": "sha256:source-example",
+      "producer": "SourceRepository",
+      "captured_at": "2026-09-15T20:00:00Z"
+    }
+  ],
+  "steps": [
+    {
+      "index": 0,
+      "kind": "observation",
+      "actor": "CodeManager",
+      "input_hash": "sha256:evidence-bundle-example",
+      "output_hash": "sha256:observation-example",
+      "evidence_refs": [
+        "event://runtime/exec-2026-09-15-0001/1",
+        "trace://exec-2026-09-15-0001"
+      ]
+    },
+    {
+      "index": 1,
+      "kind": "hypothesis",
+      "actor": "CodeManager",
+      "output_hash": "sha256:hypothesis-example",
+      "evidence_refs": [
+        "git://repository/src/storage.zig@abc123"
+      ]
+    },
+    {
+      "index": 2,
+      "kind": "mutation",
+      "actor": "CodeHealer",
+      "action": "ApplyMinimalPatch",
+      "input_hash": "sha256:patch-request-example",
+      "output_hash": "sha256:patch-result-example",
+      "evidence_refs": [
+        "git://repository/src/storage.zig@abc123"
+      ]
+    },
+    {
+      "index": 3,
+      "kind": "verification",
+      "actor": "HealingVerifier",
+      "input_hash": "sha256:verification-input-example",
+      "output_hash": "sha256:verification-output-example",
+      "evidence_refs": [
+        "test://exec-2026-09-15-0001/regression",
+        "proof://exec-2026-09-15-0001/healing"
+      ]
+    }
+  ],
+  "verification": {
+    "verifier": "HealingVerifier",
+    "status": "accepted",
+    "proof_hash": "sha256:proof-example",
+    "evidence_refs": [
+      "test://exec-2026-09-15-0001/regression",
+      "proof://exec-2026-09-15-0001/healing"
+    ]
+  },
+  "outcome": {
+    "status": "Ok",
+    "result_hash": "sha256:runtime-result-example",
+    "human_intervention": false
+  },
+  "lineage": {
+    "builder_version": "0.1.0",
+    "content_hash": "sha256:episode-example",
+    "previous_episode_hash": null
+  }
+}
