@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://allascode.dev/schemas/data-learning/reward.schema.json",
+  "title": "AllasCode Learning Reward",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "reward_id",
+    "episode_id",
+    "policy_version",
+    "dimensions",
+    "penalties",
+    "total",
+    "evidence_refs",
+    "authority"
+  ],
+  "properties": {
+    "reward_id": {"type": "string", "minLength": 1},
+    "episode_id": {"type": "string", "minLength": 1},
+    "policy_version": {"type": "string", "minLength": 1},
+    "dimensions": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/component"}
+    },
+    "penalties": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/component"}
+    },
+    "total": {"type": "number"},
+    "evidence_refs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string"}
+    },
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["calculator", "method"],
+      "properties": {
+        "calculator": {"type": "string", "minLength": 1},
+        "method": {"enum": ["deterministic", "verifier-derived", "bounded-judge", "hybrid"]},
+        "judge_model": {"type": ["string", "null"]},
+        "judge_policy_version": {"type": ["string", "null"]}
+      }
+    },
+    "content_hash": {"type": "string"}
+  },
+  "$defs": {
+    "component": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "raw_value", "weight", "weighted_value", "source_type"],
+      "properties": {
+        "name": {"type": "string", "minLength": 1},
+        "raw_value": {"type": "number"},
+        "weight": {"type": "number"},
+        "weighted_value": {"type": "number"},
+        "source_type": {"enum": ["deterministic", "verifier", "judge"]},
+        "evidence_refs": {"type": "array", "items": {"type": "string"}}
+      }
+    }
+  }
+}
